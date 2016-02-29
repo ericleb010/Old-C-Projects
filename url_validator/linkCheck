@@ -1,0 +1,258 @@
+#!/usr/bin/env python
+
+import sys
+import string
+import urllib2
+from getopt import getopt
+from getopt import GetoptError
+from HTMLParser import HTMLParser
+from HTMLParser import HTMLParseError
+
+## Setting up global variables.
+visitedUrls = []
+out = sys.stdout
+namespace = ""
+maxDepth = 3
+
+
+## Implementation of HTMLParser so that we can extract our URL data.
+class URLExtracter(HTMLParser):
+
+	## Constructor for our parser.
+	def __init__(self):
+		HTMLParser.__init__(self)
+		self.urlList = []
+
+	## Overriding the method in order to find URLs. Only the start tags have URLs.
+	def handle_starttag(self, tag, attrs):
+		global visitedUrls
+		global namespace
+
+		## If our tag has attributes to parse...
+		if (tag == 'a' and len(attrs) > 0):
+			curUrl = visitedUrls[len(visitedUrls) - 1]
+			## Check to see if we are checking a page or a directory index.
+			if (curUrl[-5:].find('.') >= 0 and curUrl[7:].find('/') >= 0):
+				## We always want the directory.
+				curUrl = curUrl[:curUrl.rfind('/') + 1]
+			else:
+				curUrl = curUrl + '/'
+
+			## Check them for URLs.
+			for (a, v) in attrs:
+				## If we find a 'href' or 'src', process it, ignoring everything else.
+				if ((a == 'href') and (len(v) > 0) and (v != '/') and (v.find('javascript:') < 0 and v.find('mailto:') < 0)):
+					tmp = v
+					if (tmp[len(tmp) - 1] == '/'): 
+						tmp = tmp[:-1]
+					if (tmp.find(':') < 0 and (curUrl[7:].find('/') >= 0) and len(tmp) > 0):
+						if (tmp[0] == '/'):
+							tmp = curUrl[:curUrl.find(namespace)] + namespace + tmp[1:]
+						else:
+							tmp = curUrl[:curUrl.rfind('/')] + '/' + tmp
+					self.urlList.append( (self.getpos(), tmp) )
+
+
+
+def printHelp():
+
+	global out
+
+	out.write("""\n-------------------------\nUSAGE HELP for linkCheck:
+
+	linkCheck [OPTIONS] <URL>
+
+
+	OPTIONS:
+	-d <#>:    Set the maximum depth of traversal for HTML files. 
+	           For example, a depth of one will check just the provided
+	           URL, whereas depth two checks all pages pointed to
+	           by the URLs within as well. Wouldn't recommend more than 3.
+	           for complex web pages.
+	-o <FILE>  Opens a file to write output to.
+	-h 
+	--help     Prints this help message and terminates.\n-------------------------\n\n""")
+
+
+
+## Helper function to check a URL for particular conditions.
+def urlCheck(url):
+
+	global visitedUrls
+	global namespace
+
+	## Check to see if the URL is indeed HTML. We don't traverse into other source code.
+	if (url.find('.pdf') >= 0 or url.find('.php') >= 0 or url.find('.exe') >= 0):
+		return -1
+	
+	## Check to see if the URL has been visited. 
+	## Skip the last one because we've just added it there!
+	for i in range(len(visitedUrls) - 1):
+		if (visitedUrls[i] == url):
+			## We've been here before. No need to check again.
+			return -1
+	
+	## Check to see if the URL is within the proper namespace.
+	try:
+		url.index(namespace)
+	## This means the namespace of the URL is external.
+	except ValueError: 
+		return -1
+
+	return 0
+
+
+## Allows us to process a URL and its webpage.
+def processURL(url, depth):
+	
+	global visitedUrls
+	global maxDepth
+	global out
+
+	urlsocket = None
+	
+	## We can mark this URL as being visited, as long as it's in the namespace.
+	if (url.find(namespace) >= 0):
+		visitedUrls.append(url)
+
+	## Lack of a ternary operator, because for some reason Fran is using 2.4.3...
+	if (depth == maxDepth - 1):
+		out.write("\nC")
+	else:
+		out.write("c")
+	out.write("hecking %s ... " % url[:75])
+
+	## Attempt to open the URL.
+	try:
+		urlsocket = urllib2.urlopen(url)
+
+	## If it fails, not a valid URL.
+	except IOError:
+		out.write("**BROKEN**\n")
+	except OSError:
+		out.write("**BROKEN**\n")
+	
+	else:	
+		## Now we know it's a valid URL. 
+		out.write("OK\n")
+
+		## Have we reached any of our stop conditions?
+		if (depth is not 0) and (urlCheck(url) is 0):
+			## Nope! 
+		
+			out.write("\n")
+			for i in range(maxDepth - depth - 1):
+				out.write("\t")
+			out.write(">>> ")
+			out.write("Traversing into %s:\n" % url[:75])
+
+			## Set up our parser.
+			parser = URLExtracter()
+	
+			## Go through all lines and extract URLs from them.
+			line = urlsocket.readline()
+			while len(line) > 0:
+				try:
+					parser.feed(line)
+				except HTMLParseError:
+					pass
+				line = urlsocket.readline()
+			urlsocket.close()
+
+			## Now our parser is holding a complete list of URLs.
+			for i in parser.urlList:
+				
+				for j in range(maxDepth - depth - 1):
+					out.write("\t")
+				out.write("|\tLine %d: " % i[0][0])
+
+				processURL(i[1], depth - 1)
+
+			for i in range(maxDepth - depth - 1):
+				out.write("\t")
+			out.write("<<< ")
+			out.write("Done traversing!\n\n")
+
+def main(argv):
+
+	global namespace
+	global maxDepth
+	global out
+	
+	## Process our arguments.
+	options = None
+	nonOptionArguments = None
+	try:
+		(options, nonOptionArguments) = getopt(argv[1:], "ho:d:", ["help"])
+	except GetoptError, msg:
+		## Invalid option provided.
+		out.write("ERROR: %s. Use '-h' for help.\n" % msg)
+		sys.exit(-1)
+
+
+	## Look through any arguments we may have.
+	for opt, arg in options:
+		## Requesting for help.
+		if (opt == '-h') or (opt == '--help'):
+			printHelp()
+			sys.exit(0)
+		## Changing output stream.
+		elif (opt == '-o'):
+			out = open(arg, 'w')
+		
+		## Changing default depth.
+		elif (opt == '-d'):
+			## My definition of depth is different from what was requested...
+			if (not arg.isdigit()):
+				out.write("ERROR: option '-d': argument is not an integer.\n")
+				sys.exit(-1)
+			maxDepth = int(arg) + 1
+	
+	## And process the sole non-option argument.
+	if (len(nonOptionArguments) is not 1 or nonOptionArguments[0].find('://') < 0):
+		## Expecting one non-option argument, the URL.
+		out.write("ERROR: Expected URL as last argument. Use '-h' for help.\n")
+		sys.exit(-1)	
+	url = nonOptionArguments[0]
+	if (url[len(url) - 1] == '/'): 
+		url = url[:-1]
+
+
+
+	## Parse the namespace if we find a scheme identifier.
+	nsIndex = url.index('://') + 3
+	namespace = url[nsIndex:]
+	
+	## If the identifier is not 'file://', check for subdomains.	
+	if (url[:8] != "file://"):
+		## Check for subdomains.
+		nsEnd = 0
+		if (namespace.find('/') < 0):
+			## If we get here, the URL was the domain name.
+			nsEnd = len(namespace)
+		else:
+			## If we get here, we can use the '/' as a marker.	
+			nsEnd = namespace.find('/') + 1
+		namespace = namespace[:nsEnd]
+		## Now we look before the last period for a domain. Create a temp string.
+		i = namespace[:namespace.rfind('.', 0, nsEnd)]
+		## Then use this string to find the index of the period of the subdomain, if any.
+		i = i.rfind('.')
+		if (i >= 0):
+			## Found a subdomain.
+			namespace = namespace[(i + 1) :]
+
+	## If we get here, it's a file.
+	else: 
+		## The namespace will be a (presumably UNIX) filesystem.
+		namespace = namespace[:namespace.rfind('/') + 1]
+
+	
+	## Begin recursing into the URL.
+	processURL(url, maxDepth - 1)
+
+	sys.exit(0)
+
+
+##------------------------------------------------------------------
+if __name__ == "__main__": main(sys.argv)

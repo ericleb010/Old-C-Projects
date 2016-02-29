@@ -1,0 +1,43 @@
+
+Checking http://qemg.mta.ca/~andrew/comp2931/simplepages/pageB.html ... OK
+
+>>> Traversing into http://qemg.mta.ca/~andrew/comp2931/simplepages/pageB.html:
+|	Line 19: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/index.html ... OK
+
+	>>> Traversing into http://qemg.mta.ca/~andrew/comp2931/simplepages/index.html:
+	|	Line 37: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/pageA.html ... OK
+
+		>>> Traversing into http://qemg.mta.ca/~andrew/comp2931/simplepages/pageA.html:
+		<<< Done traversing!
+
+	|	Line 41: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/pageB.html ... OK
+	|	Line 45: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/lower/pageC.html ... OK
+
+		>>> Traversing into http://qemg.mta.ca/~andrew/comp2931/simplepages/lower/pageC.html:
+		|	Line 16: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/lower/pageC.html ... OK
+		|	Line 17: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/lower/../pageA.html ... OK
+		|	Line 18: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/lower/../pageB.html ... OK
+		|	Line 19: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/lower/../pageA.html ... OK
+		|	Line 20: checking http://www.mta.ca ... OK
+		|	Line 21: checking http://mathcs.mta.ca ... OK
+		|	Line 22: checking http://mathcs.mta.ca/courses/comp2931/293112 ... OK
+		|	Line 23: checking http://itishardtofindaninvaliddomain.com ... **BROKEN**
+		|	Line 24: checking http://www.mta.ca/abadlink ... OK
+		|	Line 27: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/lower/index.html ... **BROKEN**
+		|	Line 29: checking http://mathcs.mta.ca/courses/comp2931/293112/simple/index.html ... OK
+		|	Line 33: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/lower/missing.html ... **BROKEN**
+		<<< Done traversing!
+
+	<<< Done traversing!
+
+|	Line 21: checking http://mathcs.mta.ca/courses/comp2931/293112/simple/pageB.html ... OK
+
+	>>> Traversing into http://mathcs.mta.ca/courses/comp2931/293112/simple/pageB.html:
+	|	Line 19: checking http://mathcs.mta.ca/courses/comp2931/293112/simple/index.html ... OK
+	|	Line 21: checking http://mathcs.mta.ca/courses/comp2931/293112/simple/pageB.html ... OK
+	|	Line 25: checking http://mathcs.mta.ca/courses/comp2931/293112/simple/missing.html ... **BROKEN**
+	<<< Done traversing!
+
+|	Line 25: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/missing.html ... **BROKEN**
+<<< Done traversing!
+

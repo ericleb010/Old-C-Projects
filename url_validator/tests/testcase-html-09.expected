@@ -1,0 +1,7 @@
+
+Checking file:///home/MTA/ealeblanc/asmts/ass4/tests/blah.html ... OK
+
+>>> Traversing into file:///home/MTA/ealeblanc/asmts/ass4/tests/blah.html:
+|	Line 3: checking http://mta.ca ... OK
+<<< Done traversing!
+

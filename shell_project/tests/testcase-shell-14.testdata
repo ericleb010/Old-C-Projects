@@ -1,0 +1,3 @@
+D=breakfast
+E=supper
+echo ${D}${E}

@@ -1,0 +1,12 @@
+ERROR: 9five is not a valid variable name. Must not lead with characters other than alphabetics and '_' characters.
+ERROR: #six is not a valid variable name. Must not lead with characters other than alphabetics and '_' characters.
+ERROR: elev(n is not a valid variable name. Must not contain characters other than alphanumerics and '_' characters.
+ERROR: Cannot retrieve 9five, it has not been declared.
+ERROR: Cannot retrieve _six, it has not been declared.
+ERROR: Cannot retrieve eleven, it has not been declared.
+
+------------------------------------
+Welcome to the Assignment Shell!
+At any time, you can call "help" to read the documentation.
+
+	>>> 	>>> 	>>> 	>>> 	>>> 	>>> 	>>> 

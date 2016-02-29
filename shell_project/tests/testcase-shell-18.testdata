@@ -1,0 +1,6 @@
+9five=alpha
+!six=beta
+elev(n=gamma
+echo ${9five}
+echo ${_six}
+echo ${eleven}

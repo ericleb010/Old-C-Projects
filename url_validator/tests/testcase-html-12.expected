@@ -1,0 +1,12 @@
+
+Checking http://csb.stanford.edu/class/public/pages/sykes_webdesign/05_simple.html ... OK
+
+>>> Traversing into http://csb.stanford.edu/class/public/pages/sykes_webdesign/05_simple.html:
+|	Line 70: checking http://www.yahoo.com ... OK
+|	Line 72: checking http://csb.stanford.edu/class/public/pages/sykes_webdesign/../../index.html ... OK
+
+	>>> Traversing into http://csb.stanford.edu/class/public/pages/sykes_webdesign/../../index.html:
+	<<< Done traversing!
+
+<<< Done traversing!
+

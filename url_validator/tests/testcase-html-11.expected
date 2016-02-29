@@ -1,0 +1,12 @@
+
+Checking http://www2.warnerbros.com/spacejam/movie/cmp/bball/bballframes.html ... OK
+
+>>> Traversing into http://www2.warnerbros.com/spacejam/movie/cmp/bball/bballframes.html:
+|	Line 42: checking http://www2.warnerbros.com/spacejam/movie/cmp/bball/bballnoframes.html ... OK
+
+	>>> Traversing into http://www2.warnerbros.com/spacejam/movie/cmp/bball/bballnoframes.html:
+	|	Line 65: checking http://www2.warnerbros.com/spacejam/movie/cmp/bball/../../bin/bball.map ... OK
+	<<< Done traversing!
+
+<<< Done traversing!
+

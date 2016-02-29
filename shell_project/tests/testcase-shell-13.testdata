@@ -1,0 +1,4 @@
+F=banana
+G=apple
+H=pear
+echo ${F} ${G} ${H}

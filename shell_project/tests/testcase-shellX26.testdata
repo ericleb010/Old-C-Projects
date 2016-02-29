@@ -1,0 +1,2 @@
+echo macaroni | grep m | more
+echo banana | more | less

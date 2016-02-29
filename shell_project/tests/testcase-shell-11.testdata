@@ -1,0 +1,2 @@
+A=leaf
+echo ${A}

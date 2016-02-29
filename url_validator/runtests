@@ -1,0 +1,42 @@
+#!/bin/sh
+## Based on run-parser-tests code provided by AHW
+
+	## Variables
+TMPFILE=/tmp/html-test.$$.tmp
+
+	## Clean temp files if interrupted.
+trap "rm -f ${TMPFILE} ; exit 1" 2 3 15
+
+	## Get every testcase file for the word-count tests.
+for TESTDATA in ./tests/testcase-html-*.testdata
+do
+
+		## Expected results file:
+	EXPECTED=`echo ${TESTDATA} | sed -e 's/.testdata$/.expected/'`
+
+		## Check if it exists.
+	if [ ! -r ${EXPECTED} ]
+	then
+			# Doesn't exist.
+		echo " -> Error: no expected results for ${TESTDATA}!" >&2
+		echo " -> Cannot find corresponding file ${EXPECTED}!" >&2
+		continue
+	fi
+
+		## Run and report any errors.
+	./linkCheck -o ${TMPFILE} `cat ${TESTDATA}`
+	
+		## Compare output to expected.
+	if
+		cmp -s ${TMPFILE} ${EXPECTED}
+	then
+		echo "  [PASS]  - ${TESTDATA}"
+	else
+		echo " *[FAIL]* - ${TESTDATA}"
+	fi
+done
+
+	## Clean up.
+rm ${TMPFILE}
+
+exit 0

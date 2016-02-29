@@ -1,0 +1,19 @@
+have
+Child (<0>) exited -- success (Status: 0)
+got
+Child (<0>) exited -- success (Status: 0)
+none
+Child (<0>) exited -- success (Status: 0)
+ERROR: Could not run ¸4‡.
+
+------------------------------------
+Welcome to the Assignment Shell!
+At any time, you can call "help" to read the documentation.
+
+	>>> 	>>> 	>>> 	>>> 	>>> 	>>> 	>>> Child (<0>) exited -- failure (Status: 0)
+
+------------------------------------
+Welcome to the Assignment Shell!
+At any time, you can call "help" to read the documentation.
+
+	>>> 	>>> 	>>> 	>>> 	>>> 	>>> 	>>> 

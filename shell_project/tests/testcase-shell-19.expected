@@ -1,0 +1,9 @@
+ERROR: gabby gook is not a valid variable name. Must not contain characters other than alphanumerics and '_' characters.
+ERROR: love  is not a valid variable name. Must not contain characters other than alphanumerics and '_' characters.
+ERROR: expected a '}' within statement.
+
+------------------------------------
+Welcome to the Assignment Shell!
+At any time, you can call "help" to read the documentation.
+
+	>>> 	>>> 	>>> 	>>> 

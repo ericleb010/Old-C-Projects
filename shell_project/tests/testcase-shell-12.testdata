@@ -1,0 +1,6 @@
+X=frog
+Y=dog
+Z=bog
+echo ${X}
+echo ${Y}
+echo ${Z}

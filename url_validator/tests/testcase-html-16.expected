@@ -1,0 +1,28 @@
+
+Checking file:///home/MTA/ealeblanc/asmts/ass4/tests/blah2.html ... OK
+
+>>> Traversing into file:///home/MTA/ealeblanc/asmts/ass4/tests/blah2.html:
+|	Line 3: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/pageB.html ... OK
+
+	>>> Traversing into http://qemg.mta.ca/~andrew/comp2931/simplepages/pageB.html:
+	|	Line 19: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/index.html ... OK
+
+		>>> Traversing into http://qemg.mta.ca/~andrew/comp2931/simplepages/index.html:
+		|	Line 37: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/pageA.html ... OK
+		|	Line 41: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/pageB.html ... OK
+		|	Line 45: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/lower/pageC.html ... OK
+		<<< Done traversing!
+
+	|	Line 21: checking http://mathcs.mta.ca/courses/comp2931/293112/simple/pageB.html ... OK
+
+		>>> Traversing into http://mathcs.mta.ca/courses/comp2931/293112/simple/pageB.html:
+		|	Line 19: checking http://mathcs.mta.ca/courses/comp2931/293112/simple/index.html ... OK
+		|	Line 21: checking http://mathcs.mta.ca/courses/comp2931/293112/simple/pageB.html ... OK
+		|	Line 25: checking http://mathcs.mta.ca/courses/comp2931/293112/simple/missing.html ... **BROKEN**
+		<<< Done traversing!
+
+	|	Line 25: checking http://qemg.mta.ca/~andrew/comp2931/simplepages/missing.html ... **BROKEN**
+	<<< Done traversing!
+
+<<< Done traversing!
+

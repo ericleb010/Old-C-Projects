@@ -1,0 +1,18 @@
+
+-------------------------
+USAGE HELP for linkCheck:
+
+	linkCheck [OPTIONS] <URL>
+
+
+	OPTIONS:
+	-d <#>:    Set the maximum depth of traversal for HTML files. 
+	           For example, a depth of one will check just the provided
+	           URL, whereas depth two checks all pages pointed to
+	           by the URLs within as well. Wouldn't recommend more than 3.
+	           for complex web pages.
+	-o <FILE>  Opens a file to write output to.
+	-h 
+	--help     Prints this help message and terminates.
+-------------------------
+
